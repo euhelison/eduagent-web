@@ -277,11 +277,11 @@ function AppChat() {
                   type="text" 
                   value={tokenInput} 
                   onChange={(e) => setTokenInput(e.target.value)} 
-                  placeholder="Código de acesso (apenas novos usuários)" 
+                  placeholder="Token do cartão (apenas para novos)" 
                   disabled={carregando}
                 />
                 <span className="app-input-hint">
-                  ✨ Já cadastrado? Deixe em branco • Novo? Use seu código de acesso
+                  ✨ Já tem conta? Deixe em branco. Novo? Insira o código do cartão.
                 </span>
               </div>
               {erro && (
@@ -304,7 +304,7 @@ function AppChat() {
               </button>
             </form>
             <div className="app-login__footer">
-              <p>✓ 7 dias grátis • Sem compromisso • Cancele quando quiser</p>
+              <p>✓ 7 dias grátis com o código do cartão • Sem cartão • Cancele quando quiser</p>
             </div>
           </div>
         </div>
