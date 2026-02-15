@@ -281,7 +281,7 @@ function AppChat() {
                   disabled={carregando}
                 />
                 <span className="app-input-hint">
-                  ✨ Já cadastrado? Deixe em branco • Novo? Use seu código de acesso
+                  Já cadastrado? Deixe em branco • Novo? Use seu código de acesso
                 </span>
               </div>
               {erro && (
