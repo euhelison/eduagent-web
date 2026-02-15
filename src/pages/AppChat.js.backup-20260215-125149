@@ -39,14 +39,6 @@ function AppChat() {
       .replace(/`(.+?)`/g, '<code>$1</code>');
   };
 
-  const handleTextareaChange = (e) => {
-    setInputMensagem(e.target.value);
-    
-    const textarea = e.target;
-    textarea.style.height = 'auto';
-    textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
-  };
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -89,17 +81,11 @@ function AppChat() {
     setErro('');
     setCarregando(true);
     try {
-      const payload = {
+      const res = await axios.post(`${API_URL}/api/auth/login`, {
         nome: nomeInput,
-        whatsapp: whatsappInput
-      };
-      
-      if (tokenInput.trim()) {
-        payload.token = tokenInput;
-      }
-      
-      const res = await axios.post(`${API_URL}/api/auth/login`, payload);
-      
+        whatsapp: whatsappInput,
+        token: tokenInput
+      });
       const user = { 
         nome: res.data.nome,
         whatsapp: res.data.whatsapp,
@@ -129,11 +115,6 @@ function AppChat() {
     setMensagens(prev => [...prev, mensagemTemp]);
     const conteudoEnviado = inputMensagem;
     setInputMensagem('');
-    
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-    }
-    
     setCarregando(true);
     setErro('');
     setBloqueado(false);
@@ -212,6 +193,16 @@ function AppChat() {
     textareaRef.current?.focus();
   };
 
+  const handleTextareaChange = (e) => {
+    setInputMensagem(e.target.value);
+    
+    // Auto-resize
+    const textarea = e.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
+  };
+
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -277,11 +268,12 @@ function AppChat() {
                   type="text" 
                   value={tokenInput} 
                   onChange={(e) => setTokenInput(e.target.value)} 
-                  placeholder="Token do cartão (apenas para novos)" 
+                  placeholder="Token fornecido" 
+                  required 
                   disabled={carregando}
                 />
                 <span className="app-input-hint">
-                  ✨ Já tem conta? Deixe em branco. Novo? Insira o código do cartão.
+                  Você recebeu um código de acesso exclusivo
                 </span>
               </div>
               {erro && (
@@ -304,7 +296,7 @@ function AppChat() {
               </button>
             </form>
             <div className="app-login__footer">
-              <p>✓ 7 dias grátis com o código do cartão • Sem cartão • Cancele quando quiser</p>
+              <p>✓ 7 dias grátis • Sem cartão • Cancele quando quiser</p>
             </div>
           </div>
         </div>
