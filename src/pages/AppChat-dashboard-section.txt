@@ -1,0 +1,122 @@
+{dashboardAberto && (
+  <div className="app-modal-overlay" onClick={() => setDashboardAberto(false)}>
+    <div className="app-modal app-modal--dashboard" onClick={(e) => e.stopPropagation()}>
+      <div className="app-modal__header">
+        <h2>Seu Progresso</h2>
+        <button onClick={() => setDashboardAberto(false)} className="app-modal__close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div className="app-modal__content">
+        {progresso ? (
+          <>
+            {/* GRÁFICO DE PROGRESSO */}
+            <div className="app-progress-section">
+              <div className="app-progress-header">
+                <h3>Progresso Geral</h3>
+                <span className="app-progress-percent">
+                  {progresso.conceitos_dominados.length > 0 
+                    ? Math.round((progresso.conceitos_dominados.length / (progresso.conceitos_dominados.length + progresso.conceitos_em_progresso.length)) * 100)
+                    : 0}%
+                </span>
+              </div>
+              <div className="app-progress-bar-large">
+                <div 
+                  className="app-progress-fill-large" 
+                  style={{
+                    width: `${progresso.conceitos_dominados.length > 0 
+                      ? Math.round((progresso.conceitos_dominados.length / (progresso.conceitos_dominados.length + progresso.conceitos_em_progresso.length)) * 100)
+                      : 0}%`
+                  }}
+                ></div>
+              </div>
+              <div className="app-progress-labels">
+                <span>{progresso.conceitos_dominados.length} conceitos dominados</span>
+                <span>{progresso.conceitos_em_progresso.length} em progresso</span>
+              </div>
+            </div>
+
+            {/* GRID DE STATS */}
+            <div className="app-stats-grid">
+              <div className="app-stat-card">
+                <div className="app-stat-card__icon app-stat-card__icon--purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2v20M17 7H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                  </svg>
+                </div>
+                <div className="app-stat-card__content">
+                  <div className="app-stat-card__value">{progresso.sequencia_dias}</div>
+                  <div className="app-stat-card__label">Dias de sequência</div>
+                </div>
+              </div>
+
+              <div className="app-stat-card">
+                <div className="app-stat-card__icon app-stat-card__icon--blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </div>
+                <div className="app-stat-card__content">
+                  <div className="app-stat-card__value">{progresso.total_sessoes}</div>
+                  <div className="app-stat-card__label">Sessões completadas</div>
+                </div>
+              </div>
+
+              <div className="app-stat-card">
+                <div className="app-stat-card__icon app-stat-card__icon--green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <div className="app-stat-card__content">
+                  <div className="app-stat-card__value">{progresso.conceitos_dominados.length}</div>
+                  <div className="app-stat-card__label">Conceitos dominados</div>
+                </div>
+              </div>
+
+              <div className="app-stat-card">
+                <div className="app-stat-card__icon app-stat-card__icon--orange">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div className="app-stat-card__content">
+                  <div className="app-stat-card__value">{progresso.conceitos_em_progresso.length}</div>
+                  <div className="app-stat-card__label">Em progresso</div>
+                </div>
+              </div>
+            </div>
+
+            {/* TRIAL INFO */}
+            {progresso.plano === 'trial' && (
+              <div className="app-trial-banner">
+                <div className="app-trial-banner__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                </div>
+                <div className="app-trial-banner__content">
+                  <strong>Período Trial</strong>
+                  <span>{progresso.dias_trial_restantes} dias restantes</span>
+                </div>
+                <button className="app-trial-banner__btn">
+                  Assinar agora
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="app-loading">
+            <div className="app-spinner"></div>
+            <p>Carregando progresso...</p>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
