@@ -193,6 +193,16 @@ function AppChat() {
     textareaRef.current?.focus();
   };
 
+  const handleTextareaChange = (e) => {
+    setInputMensagem(e.target.value);
+    
+    // Auto-resize
+    const textarea = e.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 200) + 'px';
+  };
+
+
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -397,7 +407,7 @@ function AppChat() {
               <textarea 
                 ref={textareaRef} 
                 value={inputMensagem} 
-                onChange={(e) => setInputMensagem(e.target.value)} 
+                onChange={handleTextareaChange} 
                 onKeyPress={handleKeyPress} 
                 placeholder="Digite sua mensagem..." 
                 disabled={carregando} 

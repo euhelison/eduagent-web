@@ -279,8 +279,9 @@
   font-family: inherit;
   resize: none;
   transition: all 0.2s;
+  overflow-y: hidden;
+  line-height: 1.5;
 }
-
 .app-chat__form-top textarea:focus {
   outline: none;
   border-color: #667eea;
@@ -731,4 +732,10 @@
     flex-direction: column;
     text-align: center;
   }
+}
+
+/* TEXTAREA AUTO-EXPANSÍVEL */
+.app-chat__form-top textarea {
+  overflow-y: hidden !important;
+  line-height: 1.5 !important;
 }
